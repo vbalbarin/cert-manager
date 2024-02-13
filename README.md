@@ -69,51 +69,36 @@ tls
 
 ### Create ansible vault protected variables for the secrets to the Root CA key and the Intermediate/SSL CA key
 
-#### Generate ansible vault secret
+#### Generate ansible secrets
 
-Note, the ansible.cfg in the directory assumes your ansible vault password is in `.vaultpass`
-
-`$ ansible-vault encrypt_string --name root_passphrase 'my-super-secret'`
 ```
-root_passphrase: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          62303038373766323261323532333765656433303332346263666237666464623934323430326633
-          3636373032613131323566383331336332353563373561640a343239346634343361616136326235
-          35646639666166333066666432613065636135396630646231623930343339643639636465633732
-          3632383333613666360a633865373366353638373062343836386266313131373035643932646337
-          6339
-Encryption successful
+ansible-playbook -i localhost, --connection local cert-manager-secrets-generate.yml 
 ```
 
-#### Insert ansible vault variables into `hosts.yml`
+Edit the `vaultpassword` file and replace text with your ansible vault password.
+
 ```
----
-all:
-  hosts:
-    localhost:
-  vars:
-    root_passphrase: !vault |
-      $ANSIBLE_VAULT;1.1;AES256
-      62303038373766323261323532333765656433303332346263666237666464623934323430326633
-      3636373032613131323566383331336332353563373561640a343239346634343361616136326235
-      35646639666166333066666432613065636135396630646231623930343339643639636465633732
-      3632383333613666360a633865373366353638373062343836386266313131373035643932646337
-      6339
-    intermediate_passphrase: !vault |
-      $ANSIBLE_VAULT;1.1;AES256
-      33323035396661376265313762306636666161376237353938333966653630313465316562366332
-      6339383035626234373733363362663932323538656461650a643432306139346130613061383836
-      65376138373663363234323034363936306334356635613832376534303964333230303536326361
-      6162346138336266380a656165393935366330383864623132313361373032653665393033663566
-      63313165356165643334646261373935376538386539333033626630616564663734
+vi ~/.ansible/vaultpassword
 ```
 
+Encrypt secrets
+
+```
+ansible-vault encrypt --vault-id $(id -un)@${HOME}/.ansible/vaultpassword ${HOME}/.ansible/cert-manager-secrets.yml
+```
 
 ## Usage
 
 ### Create a CA
 
-`$ ansible-playbook create-ca.yml`
+```
+ansible-playbook -i localhost, \
+  --connection local \
+  --vault-id "$(id -un)@${HOME}/.ansible/vaultpassword" \
+  -e "@${HOME}/.ansible/cert-manager-secrets.yml" \
+  create-ca.yml 
+```
+
 ```
 Enter domain [domain.tld]:
 Enter CA common name (Private CA will be appended automatically) [My Company]:
