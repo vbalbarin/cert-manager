@@ -5,3 +5,5 @@
 .vaultpass
 tls
 *.csr
+**/.venv
+**/.env
