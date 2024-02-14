@@ -16,7 +16,7 @@ When signing certificates / CSRs, you have the opportunity to create:
 ## Tested on
 
 * [x]  MacOS Mojave 10.14.3 with Homebrew openssl: stable 1.0.2q
-* [x]  CentOS7 Linux release 7.6.1810 (Core) with OpenSSL 1.0.2k-fips
+* [x]  AlmaLinux 8.9 (Midnight Oncilla) with OpenSSL 1.1.1k FIPS 25 Mar 2021
 
 
 ## Structure
