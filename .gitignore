@@ -7,3 +7,4 @@ tls
 *.csr
 **/.venv
 **/.env
+**/cert-manager-vars.yml
