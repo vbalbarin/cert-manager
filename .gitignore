@@ -8,3 +8,4 @@ tls
 **/.venv
 **/.env
 **/cert-manager-vars.yml
+**/create-sign-cert-vars.yml

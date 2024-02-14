@@ -181,20 +181,28 @@ localhost                  : ok=16   changed=14   unreachable=0    failed=0
 
 ### Create a server certificate by creating a CSR and signing with the Intermediate SSL CA
 
-`$ ansible-playbook create-sign-cert.yml`
-```
-Enter CA domain [domain.tld]:
-Enter the certificate organization [My Company]:
-Enter the certificate organizational unit [Infrastructure Services]:
-Enter the certificate country [US]:
-Enter the certificate state [State]:
-Enter the certificate locality [City]:
-Enter the certificate duration in days [3650]:
-Enter server names (FQDN list separated by commas) [vip.domain.tld,www.domain.tld]:
-Enter IPs (list separated by commas) [192.168.100.100]:
-Server cert (true/false) [True]:
-Client cert (true/false) [False]:
+Create a working copy of `create-sign-cert-vars.yml`:
 
+```
+cp create-sign-cert-vars.yml.j2 create-sign-cert-vars.yml
+```
+
+Edit `create-sign-cert-vars.yml`.
+
+Execute playbook:
+
+```
+ansible-playbook -i localhost, \
+  --connection local \
+  --vault-id $(id -un)@"${HOME}/.ansible/vaultpassword" \
+  -e @"${HOME}/.ansible/cert-manager-secrets.yml" \
+  -e @"create-sign-cert-vars.yml" \
+  create-sign-cert.yml
+```
+
+Output:
+
+```
 PLAY [localhost] ***********************************************************************************************************************************************************************************************
 
 TASK [Gathering Facts] *****************************************************************************************************************************************************************************************
@@ -356,3 +364,4 @@ localhost                  : ok=11   changed=5    unreachable=0    failed=0
 
 * http://dadhacks.org/2017/12/27/building-a-root-ca-and-an-intermediate-ca-using-openssl-and-debian-stretch/
 * http://radiac.net/blog/2015/05/self-ca/
+
