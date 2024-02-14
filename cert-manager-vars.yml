@@ -1,0 +1,10 @@
+ca_domain: "{{ ca_domain }}"
+ca_common_name: "{{ ca_common_name }}"
+ca_org: "{{ ca_org }}"
+ca_org_unit: "{{ ca_org_unit }}"
+ca_country: "{{ ca_country }}"
+ca_state: "{{ ca_state }}"
+ca_locality: "{{ ca_locality }}"
+ca_duration:  3650
+ca_crl_duration:  30
+ca_email: "{{ ca_email }}"
