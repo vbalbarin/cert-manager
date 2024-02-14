@@ -89,27 +89,30 @@ ansible-vault encrypt --vault-id $(id -un)@${HOME}/.ansible/vaultpassword ${HOME
 
 ## Usage
 
-### Create a CA
+### Create a certifying authority (CA) root.
+
+Populate settings for CA.
+
+```
+cp create-ca-vars.yml.j2 create-ca-vars.yml
+```
+
+Edit `create-ca-vars.yml` and replace template placeholders `{{ <var_name> }}`.
+
+Execute playbook to create CA.
 
 ```
 ansible-playbook -i localhost, \
   --connection local \
-  --vault-id "$(id -un)@${HOME}/.ansible/vaultpassword" \
-  -e "@${HOME}/.ansible/cert-manager-secrets.yml" \
-  create-ca.yml 
+  --vault-id $(id -un)@"${HOME}/.ansible/vaultpassword" \
+  -e @"${HOME}/.ansible/cert-manager-secrets.yml" \
+  -e @"create-ca-vars.yml" \
+  create-ca.yml
 ```
 
+Sample Output:
+
 ```
-Enter domain [domain.tld]:
-Enter CA common name (Private CA will be appended automatically) [My Company]:
-Enter the CA organization [My Company]:
-Enter the CA organizational unit [Infrastructure Services]:
-Enter the CA country (2 letters) [US]:
-Enter the CA state [State]:
-Enter the CA locality [City]:
-Enter the CA duration in days [3650]:
-Enter the CRL CA duration in days [30]:
-Enter the CA email [admin@domain.tld]:
 
 PLAY [localhost] ***********************************************************************************************************************************************************************************************
 
