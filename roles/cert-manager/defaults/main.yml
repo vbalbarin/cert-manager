@@ -20,8 +20,22 @@
 ---
 
 # tls
-# └── domain
-#     ├── intermediate-ca
+# └── domain.tld
+#     ├── root-ca                   Root CA information
+#     │   ├── certs
+#     │   │   └── ca.crt.pem        CA public certificate
+#     │   ├── crl
+#     │   │   └── ca.crl.pem        List of revoked keys (publish)
+#     │   ├── csr
+#     │   ├── index.txt             Registered certificates
+#     │   ├── index.txt.attr
+#     │   ├── newcerts              Copy of each certificate signed
+#     │   │   └── 1000.pem
+#     │   ├── openssl.cnf           CA configuration
+#     │   ├── private
+#     │   │   └── ca.key.pem        CA private key (keep safe)
+#     │   └── serial                Next serial number
+#     ├── ssl-ca
 #     │   ├── certs
 #     │   │   ├── ca.crt.pem        CA public certificate
 #     │   │   └── chain.crt.pem     Int+Root CA public certificate (distribute)
@@ -37,20 +51,6 @@
 #     │   ├── private
 #     │   │   └── ca.key.pem        CA private key (keep safe)
 #     │   └── serial                Next serial number
-#     ├── root-ca                   Root CA information
-#     │   ├── certs
-#     │   │   └── ca.crt.pem        CA public certificate
-#     │   ├── crl
-#     │   │   └── ca.crl.pem        List of revoked keys (publish)
-#     │   ├── csr
-#     │   ├── index.txt             Registered certificates
-#     │   ├── index.txt.attr
-#     │   ├── newcerts              Copy of each certificate signed
-#     │   │   └── 1000.pem
-#     │   ├── openssl.cnf           CA configuration
-#     │   ├── private
-#     │   │   └── ca.key.pem        CA private key (keep safe)
-#     │   ├── serial                Next serial number
 #     └── store
 #         └── host.domain.tld
 #             └── YYYY-MM-DD
