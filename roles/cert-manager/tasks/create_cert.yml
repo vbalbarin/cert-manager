@@ -99,3 +99,12 @@
   args:
     chdir: "{{ host_dir }}"
     creates: "{{ cert_servers[0] }}.{{ host_key_cert_suffix }}"
+
+- name: Create compressed archive of key and certificate files
+  community.general.archive:
+    path:
+    - "{{ host_dir }}/*.{{ host_cert_suffix }}"
+    - "{{ host_dir }}/*.{{ host_key_suffix }}"
+    - "{{ host_dir }}/*.{{ host_key_cert_suffix }}"
+    dest: "{{ host_dir }}/{{ cert_servers[0] }}.gz"
+    format: gz
